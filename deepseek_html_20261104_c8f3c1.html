@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunday Morning · Collage Journal · Xi Xi</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #f7efe2;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Patrick Hand', 'Caveat', cursive, sans-serif;
+            padding: 1.5rem 1rem 3rem;
+            display: flex; flex-direction: column; align-items: center;
+            position: relative; min-height: 100vh;
+        }
+
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(180,140,110,0.03) 0px, rgba(180,140,110,0.03) 2px, transparent 2px, transparent 8px),
+                radial-gradient(circle at 20% 30%, rgba(240,220,200,0.3) 0%, transparent 30%),
+                radial-gradient(circle at 90% 80%, rgba(230,210,180,0.25) 0%, transparent 40%);
+            pointer-events: none; z-index: 0;
+        }
+
+        #customBgLayer {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0; pointer-events: none;
+            background-size: cover; background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .journal {
+            max-width: 1100px; width: 100%;
+            background: #fdf8f0;
+            border-radius: 32px 32px 24px 24px;
+            box-shadow: 0 12px 28px rgba(80,60,40,0.15), 0 4px 10px rgba(80,60,40,0.1), inset 0 0 0 2px #fff5e6, inset 0 0 0 4px #e8d7c0;
+            padding: 2rem 2rem 2.5rem;
+            position: relative; z-index: 2; border: 1px solid #dac09a;
+        }
+
+        .title-section {
+            display: flex; align-items: baseline; justify-content: space-between;
+            border-bottom: 3px dashed #d9b382; padding-bottom: 0.5rem; margin-bottom: 1.8rem; flex-wrap: wrap;
+        }
+
+        .title-section h1 {
+            font-size: 2.4rem; font-weight: 700; color: #5e3e2b; letter-spacing: 1px;
+            text-shadow: 3px 3px 0 #f0dbc0; transform: rotate(-1deg);
+            font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+        }
+
+        .title-section .sub {
+            font-size: 1.1rem; color: #b07d5e; background: #fff1e0;
+            padding: 0.2rem 1rem; border-radius: 40px; border: 2px solid #dbb48b;
+            font-weight: 600; transform: rotate(1deg); box-shadow: 2px 2px 0 #e2c9ae;
+        }
+
+        .intro {
+            display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem;
+            background: #f9efe1; border-radius: 60px; padding: 0.75rem 1.8rem; margin-bottom: 2rem;
+            border: 2px solid #e2c9ae; box-shadow: inset 0 0 0 3px #fffaf2, 3px 3px 0 #dbb48b;
+            align-items: center; justify-content: center; font-size: 1.2rem; color: #4b3621;
+        }
+
+        .intro span {
+            font-weight: 600; background: #fff1e0; padding: 0.1rem 0.8rem;
+            border-radius: 30px; border: 1.5px solid #d9b382;
+        }
+
+        .scene-grid { display: flex; flex-direction: column; gap: 2.2rem; }
+
+        .scene-card {
+            background: #fffcf6; border-radius: 28px 18px 28px 18px;
+            padding: 1.6rem 1.8rem 1.8rem; border: 2px solid #ddc7aa;
+            box-shadow: 6px 6px 0 #c9b294, 0 8px 18px rgba(120,90,60,0.12);
+            transition: transform 0.15s ease; position: relative; transform: rotate(0.4deg);
+        }
+
+        .scene-card:nth-child(even) {
+            transform: rotate(-0.5deg); border-radius: 18px 28px 18px 28px;
+            box-shadow: -6px 6px 0 #c9b294, 0 8px 18px rgba(120,90,60,0.12);
+        }
+
+        .scene-card:nth-child(3n) { transform: rotate(0.8deg); }
+
+        .scene-prompt {
+            font-size: 1.2rem; margin-bottom: 1rem; color: #5b3f2c;
+            background: #f6ede1; padding: 0.4rem 1rem 0.4rem 1.2rem;
+            border-left: 8px solid #b48b5e; border-radius: 0 40px 40px 0;
+            display: inline-block; font-weight: 600; box-shadow: 2px 2px 0 #e2cdb3;
+            letter-spacing: 0.3px; line-height: 1.4;
+        }
+
+        .options { display: flex; flex-wrap: wrap; gap: 0.7rem 0.9rem; margin: 1.2rem 0 1.6rem; }
+
+        .option-btn {
+            background: #f5ebdc; border: 2px solid #b48b5e; border-radius: 40px;
+            padding: 0.5rem 1.3rem; font-size: 1rem; font-weight: 600; color: #4b3621;
+            cursor: pointer; transition: all 0.1s ease; box-shadow: 3px 3px 0 #d0b59b;
+            font-family: inherit; line-height: 1.4; letter-spacing: 0.2px; flex-shrink: 0;
+        }
+
+        .option-btn:hover { background: #fff5e8; transform: translate(1px, 1px); box-shadow: 2px 2px 0 #d0b59b; }
+
+        .option-btn.selected {
+            background: #f0dab8; border-color: #8b6a47;
+            box-shadow: inset 0 0 0 2px #fff8ec, 2px 2px 0 #8b6a47;
+            color: #2e1f12; font-weight: 700; transform: scale(0.98); position: relative;
+        }
+
+        .option-btn.selected::after { content: "✧"; font-size: 1rem; margin-left: 6px; color: #8b5e3c; display: inline-block; }
+
+        .illustration-area {
+            background: #fef7ea; border-radius: 24px 12px 24px 12px; padding: 1.2rem 0.8rem;
+            min-height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 2px dashed #d9b382;
+            box-shadow: inset 0 0 0 3px #fffdf8, 0 2px 8px rgba(0,0,0,0.03);
+            background-image: radial-gradient(circle at 10px 10px, #e8d7c0 1.5px, transparent 1.5px);
+            background-size: 28px 28px; position: relative; transition: background 0.2s;
+        }
+
+        .illustration-svg { max-width: 100%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(3px 3px 0 rgba(180,140,100,0.3)); }
+
+        .illustration-caption {
+            margin-top: 10px; font-size: 0.95rem; color: #8a6a4b; font-style: italic;
+            letter-spacing: 0.4px; background: #fff7e8; padding: 0.15rem 1rem;
+            border-radius: 40px; border: 1px solid #dbb48b;
+        }
+
+        .footer-note {
+            margin-top: 3rem; text-align: center; color: #b48b5e; font-size: 1rem;
+            border-top: 2px dotted #d9b382; padding-top: 1.5rem;
+            display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+        }
+
+        .footer-note span {
+            background: #f9efe1; padding: 0.2rem 1.2rem; border-radius: 40px;
+            border: 1.5px solid #d9b382;
+        }
+
+        /* ---------- 筆記本頁面 ---------- */
+        .notebook-page { display: none; width: 100%; margin-top: 2rem; }
+        .notebook-page.active { display: block; }
+
+        .notebook-layout {
+            display: flex; gap: 1.2rem; align-items: flex-start;
+        }
+
+        .notebook-main {
+            flex: 1; min-width: 0;
+        }
+
+        .notebook-container {
+            position: relative; background: #f4ead8; border-radius: 16px; padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(80,60,40,0.25), inset 0 0 0 2px #e8d7c0;
+            border: 1px solid #dac09a;
+            display: flex; justify-content: center;
+        }
+
+        .open-notebook {
+            background: #fffcf6; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #d9c8b0; position: relative;
+            width: 100%; max-width: 1100px;
+            aspect-ratio: 297 / 210;
+        }
+
+        .notebook-page-inner {
+            padding: 2rem 1.5rem; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 28px, #e8ddd0 28px, #e8ddd0 29px);
+            background-size: 100% 29px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .sticker-area {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+        }
+
+        .sticker {
+            position: absolute; pointer-events: auto; cursor: move; user-select: none;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+            max-width: 220px;
+        }
+
+        .sticker svg, .sticker img { display: block; max-width: 100%; height: auto; border-radius: 4px; }
+
+        .sticker .resize-handle {
+            position: absolute; right: -6px; bottom: -6px; width: 14px; height: 14px;
+            background: #b48b5e; border: 2px solid #fff; border-radius: 50%;
+            cursor: se-resize; pointer-events: auto;
+        }
+
+        .sticker .rotate-handle {
+            position: absolute; left: -20px; top: -20px; width: 16px; height: 16px;
+            background: #2980b9; border: 2px solid #fff; border-radius: 50%;
+            cursor: grab; pointer-events: auto; font-size: 10px;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; line-height: 1;
+        }
+
+        .sticker .delete-btn {
+            position: absolute; top: -8px; right: -8px; width: 20px; height: 20px;
+            background: #c0392b; color: white; border: 2px solid #fff; border-radius: 50%;
+            font-size: 12px; font-weight: bold; cursor: pointer; pointer-events: auto;
+            display: none; align-items: center; justify-content: center;
+            line-height: 1; z-index: 10;
+        }
+
+        .sticker .delete-btn:hover { background: #a93226; }
+        .sticker.selected .delete-btn { display: flex; }
+
+        .editable-text {
+            position: absolute; pointer-events: auto; cursor: move; user-select: none;
+            background: rgba(255,250,240,0.92); padding: 0.3rem 0.8rem;
+            border: 1px dashed #b48b5e; border-radius: 8px;
+            font-size: 1rem; color: #4b3621; max-width: 220px; word-break: break-word;
+            font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+            min-width: 60px;
+        }
+
+        .editable-text[contenteditable="true"] {
+            outline: 2px solid #b48b5e; background: #fff; cursor: text;
+            z-index: 200;
+        }
+
+        .editable-text .delete-btn {
+            position: absolute; top: -8px; right: -8px; width: 20px; height: 20px;
+            background: #c0392b; color: white; border: 2px solid #fff; border-radius: 50%;
+            font-size: 12px; font-weight: bold; cursor: pointer; pointer-events: auto;
+            display: none; align-items: center; justify-content: center;
+            line-height: 1; z-index: 10;
+        }
+
+        .editable-text.selected .delete-btn { display: flex; }
+
+        /* 側欄 */
+        .sidebar {
+            width: 270px; flex-shrink: 0;
+            background: #f9efe1; border: 2px solid #dbb48b; border-radius: 16px;
+            padding: 1rem; max-height: 85vh; overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            font-size: 1rem; color: #5e3e2b; margin-bottom: 0.8rem;
+            border-bottom: 2px dashed #d9b382; padding-bottom: 0.4rem;
+        }
+
+        .sidebar-section {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-section h4 {
+            font-size: 0.85rem; color: #8a6a4b; margin-bottom: 0.4rem;
+            font-weight: 700;
+        }
+
+        .sidebar-btn {
+            background: #fff1e0; border: 1.5px solid #b48b5e; border-radius: 20px;
+            padding: 0.35rem 0.9rem; font-size: 0.8rem; font-weight: 600;
+            color: #4b3621; cursor: pointer; font-family: inherit;
+            box-shadow: 2px 2px 0 #d0b59b; transition: all 0.1s;
+            margin: 0.2rem 0.3rem 0.2rem 0;
+        }
+
+        .sidebar-btn:hover { background: #fff5e8; transform: translate(1px, 1px); box-shadow: 1px 1px 0 #d0b59b; }
+        .sidebar-btn.active { background: #b48b5e; color: #fff; }
+
+        .sidebar-info {
+            font-size: 0.8rem; color: #8a6a4b; padding: 0.2rem 0;
+        }
+
+        .sidebar-empty {
+            font-size: 0.8rem; color: #b48b5e; font-style: italic;
+        }
+
+        .layer-list {
+            margin-top: 0.3rem;
+        }
+
+        .layer-item {
+            display: flex; align-items: center; gap: 0.4rem;
+            background: #fffcf6; border: 1px solid #d9c8b0; border-radius: 8px;
+            padding: 0.3rem 0.5rem; margin-bottom: 0.3rem; font-size: 0.75rem;
+            cursor: pointer; transition: all 0.1s;
+        }
+
+        .layer-item:hover { background: #fff5e8; border-color: #b48b5e; }
+        .layer-item.active { background: #f0dab8; border-color: #8b6a47; font-weight: 600; }
+
+        .layer-item .layer-thumb {
+            width: 28px; height: 28px; border-radius: 4px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            background: #f4ead8; flex-shrink: 0;
+        }
+
+        .layer-item .layer-thumb img,
+        .layer-item .layer-thumb svg {
+            max-width: 100%; max-height: 100%; object-fit: contain;
+        }
+
+        .layer-item .layer-name {
+            flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            color: #4b3621;
+        }
+
+        .layer-item .layer-fixed-icon {
+            font-size: 0.7rem; color: #8a6a4b;
+        }
+
+        .toolbar {
+            display: flex; gap: 0.6rem; margin: 1rem 0; flex-wrap: wrap; justify-content: center;
+            align-items: center;
+        }
+
+        .toolbar button {
+            background: #fff1e0; border: 2px solid #b48b5e; border-radius: 40px;
+            padding: 0.45rem 1rem; font-size: 0.85rem; font-weight: 600; color: #4b3621;
+            cursor: pointer; font-family: inherit; box-shadow: 3px 3px 0 #d0b59b;
+            transition: all 0.1s;
+        }
+
+        .toolbar button:hover { background: #fff5e8; transform: translate(1px, 1px); box-shadow: 2px 2px 0 #d0b59b; }
+
+        .toolbar button.primary { background: #dbb48b; color: #2e1f12; border-color: #8b6a47; }
+        .toolbar button.primary:hover { background: #e8c9a8; }
+
+        .toolbar button.small { font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+
+        .toolbar button.active-tool {
+            background: #b48b5e; color: #fff; border-color: #8b6a47;
+            box-shadow: inset 0 0 0 2px #fff8ec, 2px 2px 0 #8b6a47;
+        }
+
+        .toolbar button:disabled {
+            opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: 3px 3px 0 #d0b59b;
+        }
+
+        .hidden { display: none !important; }
+
+        .brush-size-control {
+            display: flex; align-items: center; gap: 0.4rem;
+            background: #f9efe1; border: 2px solid #dbb48b; border-radius: 40px;
+            padding: 0.25rem 0.8rem; margin: 0 0.3rem;
+        }
+
+        .brush-size-control label { font-size: 0.8rem; color: #5e3e2b; font-weight: 600; }
+        .brush-size-control input[type="range"] { width: 80px; cursor: pointer; accent-color: #b48b5e; }
+        .brush-size-control .size-value { font-size: 0.75rem; color: #5e3e2b; min-width: 26px; text-align: center; font-weight: 600; }
+
+        .image-panel {
+            background: #f9efe1; border: 2px solid #dbb48b; border-radius: 16px;
+            padding: 0.6rem 0.8rem; margin: 0.6rem 0; display: flex; flex-wrap: wrap;
+            gap: 0.5rem; align-items: center; justify-content: center;
+            min-height: 70px;
+        }
+
+        .image-item {
+            width: 50px; height: 50px; border: 2px dashed #d0b59b; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; background: #fffcf6; transition: all 0.1s;
+            overflow: hidden; flex-shrink: 0; position: relative;
+        }
+
+        .image-item:hover { border-color: #b48b5e; background: #fff5e8; transform: scale(1.05); }
+        .image-item svg, .image-item img { max-width: 42px; max-height: 42px; }
+
+        .image-item .remove-img {
+            position: absolute; top: -6px; right: -6px; width: 18px; height: 18px;
+            background: #c0392b; color: white; border: 1.5px solid #fff; border-radius: 50%;
+            font-size: 10px; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            line-height: 1;
+        }
+
+        .image-item .remove-img:hover { background: #a93226; }
+
+        .image-empty {
+            color: #b48b5e; font-style: italic; font-size: 0.85rem; padding: 0.4rem;
+        }
+
+        .upload-btn-wrapper {
+            position: relative; overflow: hidden; display: inline-block;
+        }
+
+        .upload-btn-wrapper input[type=file] {
+            position: absolute; left: 0; top: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer;
+        }
+
+        .upload-btn {
+            background: #fff1e0; border: 2px dashed #b48b5e; border-radius: 12px;
+            padding: 0.5rem 0.8rem; font-size: 0.8rem; font-weight: 600; color: #4b3621;
+            cursor: pointer; font-family: inherit;
+            display: flex; align-items: center; justify-content: center;
+            min-width: 70px; min-height: 50px; text-align: center;
+        }
+
+        .upload-btn:hover { background: #fff5e8; border-color: #8b6a47; }
+
+        .scale-controls {
+            display: flex; gap: 0.4rem; align-items: center; justify-content: center;
+            margin-top: 0.4rem;
+        }
+
+        .scale-controls button {
+            background: #f0dab8; border: 1px solid #b48b5e; border-radius: 8px;
+            width: 28px; height: 28px; cursor: pointer; font-size: 16px; font-weight: bold;
+            color: #5e3e2b; display: flex; align-items: center; justify-content: center;
+            padding: 0; line-height: 1;
+        }
+
+        .scale-controls button:hover { background: #e8c9a8; }
+
+        .scale-controls span { font-size: 0.8rem; color: #5e3e2b; min-width: 40px; text-align: center; }
+
+        #drawCanvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 500;
+        }
+
+        #drawCanvas.active {
+            pointer-events: auto;
+            cursor: crosshair;
+        }
+
+        .sticker.selected, .editable-text.selected {
+            outline: 2px dashed #8b5e3c;
+            outline-offset: 3px;
+        }
+
+        .drawing-save-bar {
+            display: flex; gap: 0.6rem; align-items: center; justify-content: center;
+            margin: 0.5rem 0;
+        }
+
+        .drawing-save-bar button {
+            background: #27ae60; color: white; border: 2px solid #1e8449; border-radius: 40px;
+            padding: 0.4rem 1.2rem; font-size: 0.9rem; font-weight: 600;
+            cursor: pointer; font-family: inherit; box-shadow: 3px 3px 0 #1e8449;
+        }
+
+        .drawing-save-bar button:hover { background: #219a52; }
+
+        .drawing-save-bar button.cancel {
+            background: #c0392b; border-color: #a93226; box-shadow: 3px 3px 0 #a93226;
+        }
+
+        .drawing-save-bar button.cancel:hover { background: #a93226; }
+
+        .editor-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+            z-index: 1000; padding: 1rem;
+        }
+
+        .editor-panel {
+            background: #fdf8f0; border-radius: 24px; padding: 2rem;
+            max-width: 800px; width: 100%; max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 3px solid #dbb48b;
+        }
+
+        .editor-panel h2 { color: #5e3e2b; margin-bottom: 1rem; font-size: 1.6rem; }
+
+        .editor-panel .section {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px dashed #d9b382;
+        }
+
+        .editor-panel .section h3 {
+            color: #5e3e2b; margin-bottom: 0.8rem; font-size: 1.1rem;
+        }
+
+        .editor-panel .option-row {
+            display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem;
+            padding: 0.5rem; background: #f9efe1; border-radius: 12px; border: 1px solid #e2c9ae;
+        }
+
+        .editor-panel .option-row label { flex: 1; font-weight: 600; color: #4b3621; font-size: 0.9rem; }
+
+        .editor-panel .option-row input[type="file"] { font-size: 0.8rem; width: 120px; }
+
+        .editor-panel .option-row .preview {
+            width: 50px; height: 50px; border: 1px dashed #b48b5e; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            background: #fff; flex-shrink: 0;
+        }
+
+        .editor-panel .option-row .preview svg, .editor-panel .option-row .preview img { max-width: 100%; max-height: 100%; }
+
+        .editor-panel .close-btn {
+            background: #b48b5e; color: white; border: none; border-radius: 40px;
+            padding: 0.7rem 2rem; font-size: 1.1rem; cursor: pointer; font-family: inherit;
+            margin-top: 1rem; box-shadow: 3px 3px 0 #8b6a47;
+        }
+
+        .editor-panel .close-btn:hover { background: #a07a50; }
+
+        .editor-panel .save-btn {
+            background: #27ae60; color: white; border: none; border-radius: 40px;
+            padding: 0.7rem 2rem; font-size: 1.1rem; cursor: pointer; font-family: inherit;
+            margin-top: 1rem; margin-right: 0.8rem; box-shadow: 3px 3px 0 #1e8449;
+        }
+
+        .editor-panel .save-btn:hover { background: #219a52; }
+
+        .editor-panel .bg-upload-area {
+            display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+        }
+
+        .editor-panel .bg-preview {
+            width: 80px; height: 50px; border: 1px dashed #b48b5e; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            background: #fff; flex-shrink: 0;
+        }
+
+        .editor-panel .bg-preview img { max-width: 100%; max-height: 100%; object-fit: cover; }
+
+        .password-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center;
+            z-index: 1100;
+        }
+
+        .password-panel {
+            background: #fdf8f0; border-radius: 24px; padding: 2rem;
+            max-width: 360px; width: 100%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 3px solid #dbb48b;
+            text-align: center;
+        }
+
+        .password-panel h2 { color: #5e3e2b; margin-bottom: 1rem; font-size: 1.4rem; }
+
+        .password-panel input {
+            width: 100%; padding: 0.7rem 1rem; font-size: 1.2rem; text-align: center;
+            border: 2px solid #b48b5e; border-radius: 40px; font-family: inherit;
+            color: #4b3621; background: #fff; margin-bottom: 1rem;
+            letter-spacing: 0.5rem;
+        }
+
+        .password-panel input:focus { outline: none; border-color: #8b6a47; }
+
+        .password-panel .error { color: #c0392b; font-size: 0.9rem; margin-bottom: 0.5rem; min-height: 1.2rem; }
+
+        .password-panel button {
+            background: #b48b5e; color: white; border: none; border-radius: 40px;
+            padding: 0.7rem 2rem; font-size: 1rem; cursor: pointer; font-family: inherit;
+            box-shadow: 3px 3px 0 #8b6a47; margin: 0 0.3rem;
+        }
+
+        .password-panel button:hover { background: #a07a50; }
+
+        .export-controls {
+            display: flex; gap: 0.6rem; align-items: center; justify-content: center;
+            margin: 0.8rem 0; flex-wrap: wrap;
+        }
+
+        .export-controls button {
+            background: #2980b9; color: white; border: 2px solid #1f618d; border-radius: 40px;
+            padding: 0.45rem 1.1rem; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; font-family: inherit; box-shadow: 3px 3px 0 #1a5276;
+            transition: all 0.1s;
+        }
+
+        .export-controls button:hover { background: #3498db; transform: translate(1px, 1px); box-shadow: 2px 2px 0 #1a5276; }
+
+        .mode-indicator {
+            display: inline-block; padding: 0.2rem 0.8rem; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 700; margin-left: 0.5rem;
+        }
+
+        .mode-indicator.editing { background: #f39c12; color: #fff; }
+        .mode-indicator.viewing { background: #27ae60; color: #fff; }
+
+        @media (max-width: 900px) {
+            .notebook-layout { flex-direction: column; }
+            .sidebar { width: 100%; max-height: none; }
+        }
+
+        @media (max-width: 700px) {
+            .journal { padding: 1rem; }
+            .title-section h1 { font-size: 1.8rem; }
+            .option-btn { font-size: 0.85rem; padding: 0.4rem 1rem; }
+            .scene-prompt { font-size: 1rem; }
+            .notebook-page-inner { padding: 1rem; }
+            .brush-size-control { padding: 0.2rem 0.6rem; }
+            .brush-size-control input[type="range"] { width: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="customBgLayer"></div>
+    <div class="journal">
+        <div class="title-section">
+            <h1>☕ Sunday Morning · Collage Journal</h1>
+            <div class="sub">Xi Xi · American Vintage Illustration</div>
+        </div>
+
+        <div class="intro">
+            <span>☀️ It's summer.</span>
+            <span>📅 Sunday Morning.</span>
+        </div>
+
+        <div class="scene-grid" id="sceneGrid"></div>
+
+        <div class="toolbar" id="finishToolbar" style="display: none;">
+            <button class="primary" id="goToNotebookBtn">📖 Open My Notebook</button>
+            <button id="openEditorBtn">🔒 Admin Panel</button>
+        </div>
+
+        <div class="notebook-page" id="notebookPage">
+            <div class="toolbar">
+                <button id="addTextBtn">➕ Add Text</button>
+                <button id="drawModeBtn">🖌️ Draw</button>
+                <button id="eraserModeBtn">🧹 Eraser</button>
+                <div class="brush-size-control" id="brushSizeControl" style="display:none;">
+                    <label>Size:</label>
+                    <input type="range" id="brushSizeRange" min="1" max="30" value="4" step="1">
+                    <span class="size-value" id="brushSizeValue">4</span>
+                </div>
+                <button id="clearDrawBtn" style="display:none;">🗑️ Clear</button>
+                <button id="undoBtn" disabled>↩️ Undo</button>
+                <button id="redoBtn" disabled>↪️ Redo</button>
+                <button id="saveBtn" class="primary">💾 Save</button>
+                <button id="editBtn" style="display:none;">✏️ Edit</button>
+                <span id="modeIndicator" class="mode-indicator editing">Editing</span>
+                <button id="clearNotebookBtn">🗑️ Clear All</button>
+                <button id="backToSelectionBtn">← Back</button>
+            </div>
+
+            <div class="export-controls">
+                <span style="font-size:0.85rem;color:#5e3e2b;">Export A4 HD:</span>
+                <button id="exportPngBtn">📷 PNG</button>
+                <button id="exportJpgBtn">📷 JPG</button>
+            </div>
+
+            <div class="drawing-save-bar" id="drawingSaveBar" style="display:none;">
+                <button id="saveDrawingBtn">✅ Save Drawing as Sticker</button>
+                <button id="cancelDrawingBtn" class="cancel">❌ Cancel Drawing</button>
+            </div>
+
+            <div class="image-panel" id="imagePanel">
+                <span class="image-empty">Upload your own images below to use in the notebook.</span>
+            </div>
+
+            <div class="notebook-layout">
+                <div class="notebook-main">
+                    <div class="scale-controls" id="scaleControls" style="display:none;">
+                        <button id="scaleDownBtn">−</button>
+                        <span id="scaleValue">100%</span>
+                        <button id="scaleUpBtn">+</button>
+                    </div>
+                    <div class="notebook-container">
+                        <div class="open-notebook">
+                            <div class="notebook-page-inner" id="notebookPageInner">
+                                <div class="sticker-area" id="stickerArea"></div>
+                                <canvas id="drawCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar" id="sidebar">
+                    <h3>🧷 Element Controls</h3>
+                    <div id="sidebarContent">
+                        <p class="sidebar-empty">Select an element to see controls.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span>✎ Each choice generates a unique vintage illustration</span>
+            <span>✂️ Collage your Sunday morning</span>
+        </div>
+    </div>
+
+    <!-- 管理員密碼浮層 -->
+    <div class="password-overlay hidden" id="passwordOverlay">
+        <div class="password-panel">
+            <h2>🔒 Admin Access</h2>
+            <input type="password" id="passwordInput" maxlength="4" placeholder="Enter 4-digit password" inputmode="numeric" pattern="[0-9]*">
+            <div class="error" id="passwordError"></div>
+            <button id="passwordSubmitBtn">Enter</button>
+            <button id="passwordCancelBtn">Cancel</button>
+        </div>
+    </div>
+
+    <!-- 管理員總面板 -->
+    <div class="editor-overlay hidden" id="adminPanelOverlay">
+        <div class="editor-panel">
+            <h2>🛠️ Admin Panel</h2>
+
+            <div class="section">
+                <h3>🖼️ Page Background</h3>
+                <div class="bg-upload-area">
+                    <div class="bg-preview" id="bgPreview"></div>
+                    <input type="file" id="bgImageInput" accept="image/*">
+                    <button class="close-btn" id="removeBgBtn" style="margin-top:0; padding:0.4rem 1rem; font-size:0.85rem;">Remove Background</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>✏️ Edit Option Illustrations</h3>
+                <div id="editorOptionsList"></div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: flex-end;">
+                <button class="save-btn" id="saveAdminBtn">💾 Save Changes</button>
+                <button class="close-btn" id="closeAdminPanelBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================================================================
+        // 場景數據（與之前相同，為節省篇幅，使用簡化引用）
+        // 實際使用時保留完整 SVG 定義
+        // ================================================================
+        const scenes = [
+            {
+                id: 'scene1',
+                prompt: 'At wake-up ( )',
+                options: ['the clock strikes seven',"it's nine o'clock",'no telling what time it is',"it's noon","it's right back to sleep for a while"],
+                renderIllustration: function(selected) {
+                    const baseStart = `<svg class="illustration-svg" viewBox="0 0 300 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">`;
+                    const baseEnd = `</svg>`;
+                    const bg = `<rect x="0" y="0" width="300" height="130" fill="#fef7e9" rx="12" />`;
+                    let content = '';
+                    if (selected === 'the clock strikes seven') {
+                        content = `<circle cx="150" cy="55" r="35" fill="#FFFFFF" stroke="#B48B5E" stroke-width="3"/><circle cx="150" cy="55" r="30" fill="#FEF7E9" stroke="#B48B5E" stroke-width="1.5"/><line x1="150" y1="55" x2="150" y2="30" stroke="#5A3E2B" stroke-width="3" stroke-linecap="round"/><line x1="150" y1="55" x2="170" y2="55" stroke="#5A3E2B" stroke-width="2.5" stroke-linecap="round"/><circle cx="150" cy="55" r="4" fill="#B48B5E"/><text x="120" y="105" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A5A3A" font-weight="bold">7 o'clock</text>`;
+                    } else if (selected === "it's nine o'clock") {
+                        content = `<circle cx="150" cy="55" r="35" fill="#FFFFFF" stroke="#B48B5E" stroke-width="3"/><circle cx="150" cy="55" r="30" fill="#FEF7E9" stroke="#B48B5E" stroke-width="1.5"/><line x1="150" y1="55" x2="150" y2="30" stroke="#5A3E2B" stroke-width="3" stroke-linecap="round"/><line x1="150" y1="55" x2="130" y2="55" stroke="#5A3E2B" stroke-width="2.5" stroke-linecap="round"/><circle cx="150" cy="55" r="4" fill="#B48B5E"/><text x="120" y="105" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A5A3A" font-weight="bold">9 o'clock</text>`;
+                    } else if (selected === 'no telling what time it is') {
+                        content = `<circle cx="150" cy="55" r="35" fill="#FFFFFF" stroke="#B48B5E" stroke-width="3"/><circle cx="150" cy="55" r="30" fill="#FEF7E9" stroke="#B48B5E" stroke-width="1.5"/><text x="138" y="62" font-family="Arial" font-size="28" fill="#B48B5E" font-weight="bold">?</text><text x="115" y="105" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A5A3A" font-weight="bold">no telling</text>`;
+                    } else if (selected === "it's noon") {
+                        content = `<circle cx="150" cy="55" r="35" fill="#FFFFFF" stroke="#B48B5E" stroke-width="3"/><circle cx="150" cy="55" r="30" fill="#FEF7E9" stroke="#B48B5E" stroke-width="1.5"/><line x1="150" y1="55" x2="150" y2="28" stroke="#5A3E2B" stroke-width="3" stroke-linecap="round"/><line x1="150" y1="55" x2="150" y2="78" stroke="#5A3E2B" stroke-width="2.5" stroke-linecap="round"/><circle cx="150" cy="55" r="4" fill="#B48B5E"/><text x="130" y="105" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A5A3A" font-weight="bold">noon</text>`;
+                    } else {
+                        content = `<rect x="90" y="30" width="120" height="70" rx="12" fill="#D9CFC0" stroke="#8A7A6A" stroke-width="3"/><circle cx="130" cy="55" r="12" fill="#A89B8A" stroke="#5A4E3E" stroke-width="2"/><circle cx="170" cy="55" r="12" fill="#A89B8A" stroke="#5A4E3E" stroke-width="2"/><text x="120" y="100" font-family="Comic Sans MS, cursive" font-size="14" fill="#5A4E3E" font-weight="bold">back to sleep</text>`;
+                    }
+                    return baseStart + bg + content + baseEnd;
+                }
+            },
+            {
+                id: 'scene2',
+                prompt: 'The weather today is ( )',
+                options: ['clear and mild','bright sunshine','overcast','drizzles, sometimes heavy','a storm is on the way'],
+                renderIllustration: function(selected) {
+                    const baseStart = `<svg class="illustration-svg" viewBox="0 0 300 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">`;
+                    const baseEnd = `</svg>`;
+                    const bg = `<rect x="0" y="0" width="300" height="130" fill="#fef7e9" rx="12" />`;
+                    let content = '';
+                    if (selected === 'clear and mild') {
+                        content = `<circle cx="70" cy="45" r="24" fill="#FDD670" stroke="#B48B5E" stroke-width="2.5"/><circle cx="70" cy="45" r="16" fill="#FFEAA0" stroke="#B48B5E" stroke-width="2"/><path d="M180 55 Q190 35 210 40 Q225 30 240 45 Q255 40 260 55 Q270 65 250 70 L185 70 Q170 65 180 55" fill="#FFFFFF" stroke="#B48B5E" stroke-width="2.2" /><text x="190" y="100" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A6A4B" font-weight="bold">mild</text>`;
+                    } else if (selected === 'bright sunshine') {
+                        content = `<circle cx="150" cy="60" r="38" fill="#FDD670" stroke="#B48B5E" stroke-width="3"/><circle cx="150" cy="60" r="28" fill="#FFEAA0" stroke="#B48B5E" stroke-width="2"/><path d="M150 12 L150 2 M150 118 L150 128 M102 60 L92 60 M198 60 L208 60 M114 24 L106 16 M186 96 L194 104" stroke="#B48B5E" stroke-width="3" stroke-linecap="round"/><text x="210" y="100" font-family="Comic Sans MS, cursive" font-size="15" fill="#B48B5E" font-weight="bold">☀️ bright</text>`;
+                    } else if (selected === 'overcast') {
+                        content = `<rect x="0" y="0" width="300" height="130" fill="#E3D9CC" rx="12"/><path d="M40 60 Q70 30 110 45 Q150 20 190 45 Q230 25 260 55 Q280 70 250 80 L50 80 Q25 75 40 60" fill="#B7AA99" stroke="#7A6A5A" stroke-width="2.5"/><path d="M80 90 Q120 60 170 80 Q210 65 240 90" fill="#A89B8A" stroke="#7A6A5A" stroke-width="2.2"/><text x="180" y="110" font-family="Comic Sans MS, cursive" font-size="15" fill="#4F3F2F" font-weight="bold">overcast</text>`;
+                    } else if (selected === 'drizzles, sometimes heavy') {
+                        content = `<rect x="0" y="0" width="300" height="130" fill="#E8E0D3" rx="12"/><path d="M40 40 Q80 15 130 35 Q180 10 230 35 Q260 30 270 55 L270 80 L30 80 Z" fill="#B7AA99" stroke="#7A6A5A" stroke-width="2"/><line x1="60" y1="60" x2="55" y2="85" stroke="#5A7A9A" stroke-width="3" stroke-linecap="round"/><line x1="120" y1="55" x2="115" y2="85" stroke="#5A7A9A" stroke-width="3" stroke-linecap="round"/><line x1="180" y1="50" x2="175" y2="88" stroke="#5A7A9A" stroke-width="3" stroke-linecap="round"/><text x="140" y="118" font-family="Comic Sans MS, cursive" font-size="15" fill="#2E4A6A" font-weight="bold">drizzles ☔</text>`;
+                    } else {
+                        content = `<rect x="0" y="0" width="300" height="130" fill="#D6CCBE" rx="12"/><path d="M30 50 Q70 20 130 40 Q180 10 240 35 Q280 40 270 70 L270 85 L30 85 Z" fill="#8E8274" stroke="#5A4E3E" stroke-width="2.5"/><polygon points="170,50 155,80 170,80 150,110 180,70 165,70 185,45" fill="#FDD670" stroke="#B48B5E" stroke-width="2"/><text x="190" y="115" font-family="Comic Sans MS, cursive" font-size="15" fill="#3A2E22" font-weight="bold">storm ⚡</text>`;
+                    }
+                    return baseStart + bg + content + baseEnd;
+                }
+            },
+            {
+                id: 'scene3',
+                prompt: 'Look in the mirror and see ( )',
+                options: ['a pall of loneliness','a toothpaste ad','boundless wheat fields','a lotus in full bloom','a pair of eyes crossing'],
+                renderIllustration: function(selected) {
+                    const baseStart = `<svg class="illustration-svg" viewBox="0 0 300 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">`;
+                    const baseEnd = `</svg>`;
+                    const bg = `<rect x="0" y="0" width="300" height="130" fill="#fef7e9" rx="12" />`;
+                    const mirrorFrame = `<rect x="90" y="15" width="120" height="100" rx="20" fill="#FFFFFF" stroke="#B48B5E" stroke-width="3" stroke-dasharray="6 4" />`;
+                    let content = '';
+                    if (selected === 'a pall of loneliness') {
+                        content = `<rect x="100" y="25" width="100" height="80" rx="12" fill="#D9CFC0" stroke="#8A7A6A" stroke-width="2"/><circle cx="150" cy="60" r="12" fill="#A89B8A" stroke="#5A4E3E" stroke-width="2"/><text x="200" y="110" font-family="Comic Sans MS, cursive" font-size="14" fill="#5A4E3E" font-weight="bold">lonely</text>`;
+                    } else if (selected === 'a toothpaste ad') {
+                        content = `<rect x="100" y="25" width="100" height="80" rx="12" fill="#FFFFFF" stroke="#B48B5E" stroke-width="2"/><rect x="130" y="45" width="40" height="16" rx="8" fill="#F0F0F0" stroke="#8A6A4B" stroke-width="2"/><circle cx="150" cy="70" r="14" fill="#FFFFFF" stroke="#8A6A4B" stroke-width="2"/><text x="175" y="105" font-family="Comic Sans MS, cursive" font-size="15" fill="#2E6A4A" font-weight="bold">toothpaste</text>`;
+                    } else if (selected === 'boundless wheat fields') {
+                        content = `<rect x="100" y="25" width="100" height="80" rx="12" fill="#F5E6B0" stroke="#B48B5E" stroke-width="2"/><path d="M105 75 L110 55 L115 75 L120 50 L125 75 L130 48 L135 75 L140 45 L145 75 L150 40 L155 75 L160 47 L165 75 L170 52 L175 75 L180 58 L185 75 L190 65 L195 75" stroke="#C49A3A" stroke-width="2.5" fill="none"/><text x="195" y="110" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A6A2B" font-weight="bold">wheat</text>`;
+                    } else if (selected === 'a lotus in full bloom') {
+                        content = `<rect x="100" y="25" width="100" height="80" rx="12" fill="#EAF4E8" stroke="#B48B5E" stroke-width="2"/><ellipse cx="150" cy="65" rx="24" ry="16" fill="#F9C8D0" stroke="#B86A7A" stroke-width="2"/><ellipse cx="150" cy="55" rx="18" ry="12" fill="#FDE0E8" stroke="#C87A8A" stroke-width="1.5"/><circle cx="150" cy="55" r="5" fill="#FDD670" stroke="#B48B5E" stroke-width="1.5"/><text x="190" y="110" font-family="Comic Sans MS, cursive" font-size="14" fill="#6A4A5A" font-weight="bold">lotus</text>`;
+                    } else {
+                        content = `<rect x="100" y="25" width="100" height="80" rx="12" fill="#FFFFFF" stroke="#B48B5E" stroke-width="2"/><circle cx="135" cy="65" r="12" fill="#FFFFFF" stroke="#3A2E22" stroke-width="2"/><circle cx="165" cy="65" r="12" fill="#FFFFFF" stroke="#3A2E22" stroke-width="2"/><circle cx="140" cy="67" r="4" fill="#3A2E22"/><circle cx="160" cy="67" r="4" fill="#3A2E22"/><text x="195" y="110" font-family="Comic Sans MS, cursive" font-size="14" fill="#3A2E22" font-weight="bold">cross-eyed</text>`;
+                    }
+                    return baseStart + bg + mirrorFrame + content + baseEnd;
+                }
+            },
+            {
+                id: 'scene4',
+                prompt: 'Thoughts turn to what to eat and drink ( )',
+                options: ['some bread with sugar and peanut butter','the teahouse is sure to be packed','God, no more instant noodles','an apple',"there's nothing to eat in the fridge"],
+                renderIllustration: function(selected) {
+                    const baseStart = `<svg class="illustration-svg" viewBox="0 0 300 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">`;
+                    const baseEnd = `</svg>`;
+                    const bg = `<rect x="0" y="0" width="300" height="130" fill="#fef7e9" rx="12" />`;
+                    let content = '';
+                    if (selected === 'some bread with sugar and peanut butter') {
+                        content = `<rect x="90" y="30" width="120" height="60" rx="12" fill="#F5E6C8" stroke="#B48B5E" stroke-width="3"/><rect x="110" y="45" width="30" height="20" rx="6" fill="#D4A86A" stroke="#8A6A4B" stroke-width="2"/><rect x="150" y="45" width="30" height="20" rx="6" fill="#D4A86A" stroke="#8A6A4B" stroke-width="2"/><text x="200" y="100" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A5A3A" font-weight="bold">bread+PB</text>`;
+                    } else if (selected === 'the teahouse is sure to be packed') {
+                        content = `<rect x="80" y="25" width="140" height="70" rx="16" fill="#E8D9C0" stroke="#B48B5E" stroke-width="3"/><circle cx="110" cy="65" r="14" fill="#D4B48A" stroke="#8A6A4B" stroke-width="2"/><circle cx="150" cy="65" r="14" fill="#D4B48A" stroke="#8A6A4B" stroke-width="2"/><circle cx="190" cy="65" r="14" fill="#D4B48A" stroke="#8A6A4B" stroke-width="2"/><text x="215" y="100" font-family="Comic Sans MS, cursive" font-size="14" fill="#7A5A3A" font-weight="bold">teahouse</text>`;
+                    } else if (selected === 'God, no more instant noodles') {
+                        content = `<rect x="100" y="30" width="100" height="60" rx="12" fill="#F0E0C0" stroke="#B48B5E" stroke-width="3"/><rect x="120" y="40" width="60" height="30" rx="8" fill="#E8C87A" stroke="#8A6A4B" stroke-width="2"/><text x="132" y="60" font-family="Arial" font-size="12" fill="#8A3A3A" font-weight="bold">NO</text><text x="205" y="100" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A3A3A" font-weight="bold">no noodles</text>`;
+                    } else if (selected === 'an apple') {
+                        content = `<circle cx="150" cy="60" r="25" fill="#E85A4A" stroke="#B83A2A" stroke-width="3"/><ellipse cx="150" cy="40" rx="8" ry="5" fill="#6A8A4A" stroke="#4A6A2A" stroke-width="2"/><text x="205" y="100" font-family="Comic Sans MS, cursive" font-size="15" fill="#B83A2A" font-weight="bold">apple 🍎</text>`;
+                    } else {
+                        content = `<rect x="90" y="25" width="120" height="80" rx="12" fill="#D9CFC0" stroke="#8A7A6A" stroke-width="3"/><rect x="110" y="40" width="80" height="50" rx="8" fill="#FFFFFF" stroke="#8A7A6A" stroke-width="2"/><text x="195" y="100" font-family="Comic Sans MS, cursive" font-size="14" fill="#5A4E3E" font-weight="bold">empty fridge</text>`;
+                    }
+                    return baseStart + bg + content + baseEnd;
+                }
+            },
+            {
+                id: 'scene5',
+                prompt: "When putting on jeans, coins fall out of the pocket and roll all over the floor. In the end, two can't be found. The explanation for that is ( )",
+                options: ['bad things happen to Leos','troubles have ended','try harder to save some money?',"there'll be a fountain here",'the earth is still young'],
+                renderIllustration: function(selected) {
+                    const baseStart = `<svg class="illustration-svg" viewBox="0 0 300 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">`;
+                    const baseEnd = `</svg>`;
+                    const bg = `<rect x="0" y="0" width="300" height="130" fill="#fef7e9" rx="12" />`;
+                    let content = '';
+                    if (selected === 'bad things happen to Leos') {
+                        content = `<circle cx="150" cy="50" r="20" fill="#FDD670" stroke="#B48B5E" stroke-width="2.5"/><text x="142" y="57" font-family="Arial" font-size="16" fill="#8A5A2A" font-weight="bold">♌</text><text x="195" y="115" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A5A2A" font-weight="bold">Leo luck</text>`;
+                    } else if (selected === 'troubles have ended') {
+                        content = `<circle cx="150" cy="55" r="22" fill="#B8D8B8" stroke="#4A7A4A" stroke-width="2.5"/><path d="M140 55 L148 63 L162 47" stroke="#2A5A2A" stroke-width="4" fill="none" stroke-linecap="round"/><text x="195" y="115" font-family="Comic Sans MS, cursive" font-size="14" fill="#2A5A2A" font-weight="bold">troubles end</text>`;
+                    } else if (selected === 'try harder to save some money?') {
+                        content = `<circle cx="130" cy="55" r="22" fill="#E8C87A" stroke="#8A6A4B" stroke-width="2.5"/><text x="122" y="62" font-family="Arial" font-size="18" fill="#5A3A1A" font-weight="bold">$</text><text x="190" y="115" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A5A2A" font-weight="bold">save money</text>`;
+                    } else if (selected === "there'll be a fountain here") {
+                        content = `<ellipse cx="150" cy="90" rx="40" ry="10" fill="#B8D8E8" stroke="#4A7A8A" stroke-width="2"/><path d="M150 50 L150 85 M150 50 Q130 40 120 60 M150 50 Q170 40 180 60" stroke="#6AB0D0" stroke-width="3" fill="none" stroke-linecap="round"/><text x="190" y="120" font-family="Comic Sans MS, cursive" font-size="14" fill="#2A5A7A" font-weight="bold">fountain</text>`;
+                    } else {
+                        content = `<circle cx="150" cy="60" r="28" fill="#8AB87A" stroke="#3A6A2A" stroke-width="2.5"/><path d="M120 50 Q150 40 180 55" stroke="#4A7A2A" stroke-width="2" fill="none"/><text x="195" y="115" font-family="Comic Sans MS, cursive" font-size="13" fill="#3A6A2A" font-weight="bold">earth young</text>`;
+                    }
+                    return baseStart + bg + content + baseEnd;
+                }
+            },
+            {
+                id: 'scene6',
+                prompt: 'Come to a decision. For this afternoon ( )',
+                options: ['the hamper full of dirty clothes can wait till Monday','go swimming at Sai Wan beach, with its big waves','sing in the rain','write an application letter for an interesting job','start writing a great novel'],
+                renderIllustration: function(selected) {
+                    const baseStart = `<svg class="illustration-svg" viewBox="0 0 300 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">`;
+                    const baseEnd = `</svg>`;
+                    const bg = `<rect x="0" y="0" width="300" height="130" fill="#fef7e9" rx="12" />`;
+                    let content = '';
+                    if (selected === 'the hamper full of dirty clothes can wait till Monday') {
+                        content = `<rect x="100" y="40" width="100" height="60" rx="10" fill="#E8D9C0" stroke="#B48B5E" stroke-width="3"/><path d="M110 50 L190 50 M110 65 L190 65 M110 80 L190 80" stroke="#C0A88A" stroke-width="2"/><text x="200" y="115" font-family="Comic Sans MS, cursive" font-size="13" fill="#8A5A3A" font-weight="bold">hamper</text>`;
+                    } else if (selected === 'go swimming at Sai Wan beach, with its big waves') {
+                        content = `<rect x="80" y="40" width="140" height="50" rx="10" fill="#B8D8E8" stroke="#4A7A8A" stroke-width="2.5"/><path d="M80 60 Q110 40 140 60 Q170 80 200 60" stroke="#3A6A9A" stroke-width="3" fill="none"/><text x="205" y="110" font-family="Comic Sans MS, cursive" font-size="14" fill="#2A5A7A" font-weight="bold">Sai Wan</text>`;
+                    } else if (selected === 'sing in the rain') {
+                        content = `<circle cx="150" cy="55" r="20" fill="#FDD670" stroke="#B48B5E" stroke-width="2.5"/><text x="140" y="62" font-family="Arial" font-size="18" fill="#8A5A2A">♪</text><line x1="120" y1="90" x2="115" y2="110" stroke="#5A7A9A" stroke-width="3" stroke-linecap="round"/><text x="195" y="120" font-family="Comic Sans MS, cursive" font-size="14" fill="#2A4A6A" font-weight="bold">sing in rain</text>`;
+                    } else if (selected === 'write an application letter for an interesting job') {
+                        content = `<rect x="90" y="30" width="120" height="70" rx="8" fill="#FFFFFF" stroke="#B48B5E" stroke-width="3"/><line x1="110" y1="50" x2="190" y2="50" stroke="#8A7A6A" stroke-width="2"/><text x="195" y="115" font-family="Comic Sans MS, cursive" font-size="13" fill="#5A4A3A" font-weight="bold">apply</text>`;
+                    } else {
+                        content = `<rect x="100" y="35" width="100" height="65" rx="8" fill="#FFF5E6" stroke="#B48B5E" stroke-width="3"/><line x1="120" y1="55" x2="180" y2="55" stroke="#8A7A6A" stroke-width="2"/><text x="190" y="115" font-family="Comic Sans MS, cursive" font-size="14" fill="#5A3A2A" font-weight="bold">novel</text>`;
+                    }
+                    return baseStart + bg + content + baseEnd;
+                }
+            },
+            {
+                id: 'scene7',
+                prompt: "There's the doorbell. The door opens and it's ( )",
+                options: ['a broom salesman','someone here to collect the building management fee','someone here to repossess a record player over lapsed payments','a telegram','nobody in the hallway','a roomful of hydrogen balloons that float in'],
+                renderIllustration: function(selected) {
+                    const baseStart = `<svg class="illustration-svg" viewBox="0 0 300 130" width="100%" height="auto" xmlns="http://www.w3.org/2000/svg">`;
+                    const baseEnd = `</svg>`;
+                    const bg = `<rect x="0" y="0" width="300" height="130" fill="#fef7e9" rx="12" />`;
+                    let content = '';
+                    if (selected === 'a broom salesman') {
+                        content = `<rect x="90" y="30" width="120" height="70" rx="8" fill="#F0E8D8" stroke="#B48B5E" stroke-width="3"/><line x1="130" y1="40" x2="150" y2="90" stroke="#8A6A4B" stroke-width="4"/><text x="200" y="115" font-family="Comic Sans MS, cursive" font-size="14" fill="#6A4A2A" font-weight="bold">broom</text>`;
+                    } else if (selected === 'someone here to collect the building management fee') {
+                        content = `<rect x="90" y="30" width="120" height="70" rx="8" fill="#E8D9C0" stroke="#B48B5E" stroke-width="3"/><circle cx="150" cy="55" r="16" fill="#D4B48A" stroke="#8A6A4B" stroke-width="2"/><text x="142" y="62" font-family="Arial" font-size="14" fill="#5A3A1A" font-weight="bold">$</text><text x="190" y="115" font-family="Comic Sans MS, cursive" font-size="13" fill="#6A4A2A" font-weight="bold">fee</text>`;
+                    } else if (selected === 'someone here to repossess a record player over lapsed payments') {
+                        content = `<rect x="90" y="30" width="120" height="70" rx="8" fill="#E8D9C0" stroke="#B48B5E" stroke-width="3"/><circle cx="150" cy="60" r="18" fill="#8A7A6A" stroke="#5A4E3E" stroke-width="2"/><text x="190" y="115" font-family="Comic Sans MS, cursive" font-size="13" fill="#5A4E3E" font-weight="bold">repo</text>`;
+                    } else if (selected === 'a telegram') {
+                        content = `<rect x="90" y="35" width="120" height="60" rx="8" fill="#FFFFFF" stroke="#B48B5E" stroke-width="3"/><line x1="110" y1="55" x2="190" y2="55" stroke="#8A7A6A" stroke-width="2"/><text x="125" y="85" font-family="Arial" font-size="14" fill="#8A3A3A" font-weight="bold">TELEGRAM</text><text x="195" y="115" font-family="Comic Sans MS, cursive" font-size="14" fill="#8A3A3A" font-weight="bold">telegram</text>`;
+                    } else if (selected === 'nobody in the hallway') {
+                        content = `<rect x="90" y="30" width="120" height="80" rx="8" fill="#D9CFC0" stroke="#8A7A6A" stroke-width="3"/><rect x="130" y="50" width="40" height="60" rx="4" fill="#B7AA99" stroke="#7A6A5A" stroke-width="2"/><text x="195" y="115" font-family="Comic Sans MS, cursive" font-size="14" fill="#5A4E3E" font-weight="bold">nobody</text>`;
+                    } else {
+                        content = `<circle cx="120" cy="50" r="16" fill="#F9C8D0" stroke="#B86A7A" stroke-width="2"/><circle cx="160" cy="40" r="18" fill="#B8D8E8" stroke="#4A7A8A" stroke-width="2"/><circle cx="200" cy="60" r="14" fill="#FDD670" stroke="#B48B5E" stroke-width="2"/><text x="200" y="120" font-family="Comic Sans MS, cursive" font-size="13" fill="#6A4A5A" font-weight="bold">balloons</text>`;
+                    }
+                    return baseStart + bg + content + baseEnd;
+                }
+            }
+        ];
+
+        // ================================================================
+        // 狀態管理
+        // ================================================================
+        let customIllustrations = JSON.parse(localStorage.getItem('customIllustrations') || '{}');
+        let customBg = localStorage.getItem('customBg') || '';
+        let selectedOptions = {};
+        let stickers = [];
+        let selectedStickerIndex = -1;
+        let currentTool = null;
+        let pendingAdminData = null;
+        let userImageLibrary = [];
+        let brushSize = 4;
+
+        let history = [];
+        let historyIndex = -1;
+        let isSaved = false;
+
+        let isDrawingMode = false;
+        let drawingSnapshot = null;
+
+        const ADMIN_PASSWORD = '9900';
+
+        // ================================================================
+        // 歷史記錄
+        // ================================================================
+        function saveHistory() {
+            const state = JSON.stringify({
+                stickers: stickers,
+                canvasData: canvas.toDataURL()
+            });
+            if (historyIndex < history.length - 1) {
+                history = history.slice(0, historyIndex + 1);
+            }
+            history.push(state);
+            historyIndex = history.length - 1;
+            updateUndoRedoButtons();
+            updateSidebar();
+        }
+
+        function undo() {
+            if (historyIndex > 0) {
+                historyIndex--;
+                restoreState(history[historyIndex]);
+                updateUndoRedoButtons();
+            }
+        }
+
+        function redo() {
+            if (historyIndex < history.length - 1) {
+                historyIndex++;
+                restoreState(history[historyIndex]);
+                updateUndoRedoButtons();
+            }
+        }
+
+        function restoreState(stateStr) {
+            const state = JSON.parse(stateStr);
+            stickers = state.stickers || [];
+            renderNotebook();
+            const img = new Image();
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const dpr = window.devicePixelRatio || 1;
+                ctx.drawImage(img, 0, 0, canvas.width / dpr, canvas.height / dpr);
+            };
+            if (state.canvasData) {
+                img.src = state.canvasData;
+            }
+            updateSidebar();
+        }
+
+        function updateUndoRedoButtons() {
+            document.getElementById('undoBtn').disabled = historyIndex <= 0;
+            document.getElementById('redoBtn').disabled = historyIndex >= history.length - 1;
+        }
+
+        // ================================================================
+        // 渲染場景
+        // ================================================================
+        function renderScenes() {
+            const grid = document.getElementById('sceneGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            scenes.forEach((scene) => {
+                const card = document.createElement('div');
+                card.className = 'scene-card';
+                card.id = scene.id;
+
+                const promptDiv = document.createElement('div');
+                promptDiv.className = 'scene-prompt';
+                promptDiv.textContent = scene.prompt;
+                card.appendChild(promptDiv);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'options';
+                scene.options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.textContent = opt;
+                    btn.dataset.option = opt;
+                    btn.dataset.sceneId = scene.id;
+                    btn.addEventListener('click', (e) => handleOptionClick(e, scene, opt));
+                    optionsDiv.appendChild(btn);
+                });
+                card.appendChild(optionsDiv);
+
+                const illusDiv = document.createElement('div');
+                illusDiv.className = 'illustration-area';
+                illusDiv.id = `illus-${scene.id}`;
+                illusDiv.innerHTML = `<div style="color:#b48b5e; font-style:italic; padding:1rem;">✏️ Pick an option</div>`;
+                card.appendChild(illusDiv);
+
+                grid.appendChild(card);
+            });
+        }
+
+        function getIllustrationHTML(sceneId, option) {
+            const custom = customIllustrations[sceneId]?.[option];
+            if (custom) {
+                if (custom.type === 'img') return `<img src="${custom.data}" alt="${option}" style="max-width:100%; max-height:130px;" />`;
+                if (custom.type === 'svg') return custom.data;
+            }
+            const scene = scenes.find(s => s.id === sceneId);
+            if (scene) return scene.renderIllustration(option);
+            return '';
+        }
+
+        function handleOptionClick(event, scene, selectedOption) {
+            document.querySelectorAll(`.option-btn[data-scene-id="${scene.id}"]`).forEach(b => b.classList.remove('selected'));
+            event.target.classList.add('selected');
+            selectedOptions[scene.id] = selectedOption;
+            const illusContainer = document.getElementById(`illus-${scene.id}`);
+            if (illusContainer) {
+                illusContainer.innerHTML = getIllustrationHTML(scene.id, selectedOption) + 
+                    `<div class="illustration-caption">"${selectedOption}"</div>`;
+            }
+            document.getElementById('finishToolbar').style.display = 'flex';
+        }
+
+        // ================================================================
+        // 管理員密碼
+        // ================================================================
+        function requestAdminAccess() {
+            document.getElementById('passwordOverlay').classList.remove('hidden');
+            document.getElementById('passwordInput').value = '';
+            document.getElementById('passwordError').textContent = '';
+            document.getElementById('passwordInput').focus();
+        }
+
+        function verifyPassword() {
+            const input = document.getElementById('passwordInput').value.trim();
+            if (input === ADMIN_PASSWORD) {
+                document.getElementById('passwordOverlay').classList.add('hidden');
+                pendingAdminData = {
+                    customIllustrations: JSON.parse(JSON.stringify(customIllustrations)),
+                    customBg: customBg
+                };
+                openAdminPanel();
+            } else {
+                document.getElementById('passwordError').textContent = 'Incorrect password. Try again.';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        // ================================================================
+        // 管理員面板
+        // ================================================================
+        function openAdminPanel() {
+            const overlay = document.getElementById('adminPanelOverlay');
+            renderBgPreview();
+            renderAdminOptionsList();
+            overlay.classList.remove('hidden');
+        }
+
+        function closeAdminPanel() {
+            if (pendingAdminData) {
+                customIllustrations = pendingAdminData.customIllustrations;
+                customBg = pendingAdminData.customBg;
+                pendingAdminData = null;
+                applyCustomBg();
+                Object.keys(selectedOptions).forEach(sceneId => {
+                    const opt = selectedOptions[sceneId];
+                    const ic = document.getElementById(`illus-${sceneId}`);
+                    if (ic) {
+                        ic.innerHTML = getIllustrationHTML(sceneId, opt) + `<div class="illustration-caption">"${opt}"</div>`;
+                    }
+                });
+            }
+            document.getElementById('adminPanelOverlay').classList.add('hidden');
+        }
+
+        function saveAdminChanges() {
+            try {
+                localStorage.setItem('customIllustrations', JSON.stringify(customIllustrations));
+                if (customBg) localStorage.setItem('customBg', customBg);
+                else localStorage.removeItem('customBg');
+                pendingAdminData = null;
+                applyCustomBg();
+                Object.keys(selectedOptions).forEach(sceneId => {
+                    const opt = selectedOptions[sceneId];
+                    const ic = document.getElementById(`illus-${sceneId}`);
+                    if (ic) {
+                        ic.innerHTML = getIllustrationHTML(sceneId, opt) + `<div class="illustration-caption">"${opt}"</div>`;
+                    }
+                });
+                alert('Changes saved! Users will now see the updated illustrations and background.');
+                document.getElementById('adminPanelOverlay').classList.add('hidden');
+            } catch(e) {
+                alert('Failed to save. Local storage may be full or unavailable.');
+            }
+        }
+
+        function renderBgPreview() {
+            const preview = document.getElementById('bgPreview');
+            if (customBg) {
+                preview.innerHTML = `<img src="${customBg}" alt="bg" />`;
+            } else {
+                preview.innerHTML = '<span style="color:#b48b5e;font-size:0.7rem;">No bg</span>';
+            }
+            applyCustomBg();
+        }
+
+        function applyCustomBg() {
+            const layer = document.getElementById('customBgLayer');
+            if (customBg) {
+                layer.style.backgroundImage = `url(${customBg})`;
+            } else {
+                layer.style.backgroundImage = 'none';
+            }
+        }
+
+        function renderAdminOptionsList() {
+            const list = document.getElementById('editorOptionsList');
+            list.innerHTML = '';
+
+            scenes.forEach(scene => {
+                const h = document.createElement('h3');
+                h.textContent = scene.prompt;
+                h.style.cssText = 'margin-top:1rem;margin-bottom:0.5rem;color:#5e3e2b;font-size:0.95rem;';
+                list.appendChild(h);
+
+                scene.options.forEach(opt => {
+                    const row = document.createElement('div');
+                    row.className = 'option-row';
+
+                    const label = document.createElement('label');
+                    label.textContent = opt;
+                    row.appendChild(label);
+
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'preview';
+                    const custom = customIllustrations[scene.id]?.[opt];
+                    if (custom) {
+                        if (custom.type === 'img') previewDiv.innerHTML = `<img src="${custom.data}" style="max-width:100%;max-height:100%;" />`;
+                        else previewDiv.innerHTML = custom.data;
+                    } else {
+                        const defSvg = scene.renderIllustration(opt);
+                        previewDiv.innerHTML = defSvg;
+                        const s = previewDiv.querySelector('svg');
+                        if (s) { s.setAttribute('width','40'); s.setAttribute('height','40'); }
+                    }
+                    row.appendChild(previewDiv);
+
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    fileInput.style.width = '110px';
+                    fileInput.addEventListener('change', (e) => {
+                        const file = e.target.files[0];
+                        if (!file) return;
+                        const reader = new FileReader();
+                        reader.onload = (ev) => {
+                            const dataUrl = ev.target.result;
+                            if (!customIllustrations[scene.id]) customIllustrations[scene.id] = {};
+                            if (file.type === 'image/svg+xml' || dataUrl.startsWith('data:image/svg')) {
+                                customIllustrations[scene.id][opt] = { type: 'svg', data: dataUrl };
+                            } else {
+                                customIllustrations[scene.id][opt] = { type: 'img', data: dataUrl };
+                            }
+                            if (customIllustrations[scene.id][opt].type === 'img') {
+                                previewDiv.innerHTML = `<img src="${dataUrl}" style="max-width:100%;max-height:100%;" />`;
+                            } else {
+                                previewDiv.innerHTML = dataUrl;
+                                const s = previewDiv.querySelector('svg');
+                                if (s) { s.setAttribute('width','40'); s.setAttribute('height','40'); }
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                    row.appendChild(fileInput);
+
+                    const clearBtn = document.createElement('button');
+                    clearBtn.textContent = '✕';
+                    clearBtn.style.cssText = 'background:#d9c8b0;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;color:#5e3e2b;font-weight:bold;font-size:11px;';
+                    clearBtn.addEventListener('click', () => {
+                        if (customIllustrations[scene.id]?.[opt]) {
+                            delete customIllustrations[scene.id][opt];
+                            if (Object.keys(customIllustrations[scene.id]).length === 0) delete customIllustrations[scene.id];
+                            const defSvg = scene.renderIllustration(opt);
+                            previewDiv.innerHTML = defSvg;
+                            const s = previewDiv.querySelector('svg');
+                            if (s) { s.setAttribute('width','40'); s.setAttribute('height','40'); }
+                        }
+                    });
+                    row.appendChild(clearBtn);
+
+                    list.appendChild(row);
+                });
+            });
+        }
+
+        // ================================================================
+        // 使用者圖片庫
+        // ================================================================
+        function renderUserImagePanel() {
+            const panel = document.getElementById('imagePanel');
+            panel.innerHTML = '';
+
+            if (userImageLibrary.length === 0) {
+                const emptyMsg = document.createElement('span');
+                emptyMsg.className = 'image-empty';
+                emptyMsg.textContent = 'Upload your own images to use in the notebook.';
+                panel.appendChild(emptyMsg);
+            } else {
+                userImageLibrary.forEach((img, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'image-item';
+                    div.title = 'Click to add to notebook';
+                    if (img.type === 'img') {
+                        div.innerHTML = `<img src="${img.data}" alt="image" />`;
+                    } else {
+                        div.innerHTML = img.data;
+                        const s = div.querySelector('svg');
+                        if (s) { s.setAttribute('width','44'); s.setAttribute('height','44'); }
+                    }
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.className = 'remove-img';
+                    removeBtn.textContent = '×';
+                    removeBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        userImageLibrary.splice(idx, 1);
+                        renderUserImagePanel();
+                    });
+                    div.appendChild(removeBtn);
+
+                    div.addEventListener('click', () => addImageSticker(img));
+                    panel.appendChild(div);
+                });
+            }
+
+            const uploadWrapper = document.createElement('div');
+            uploadWrapper.className = 'upload-btn-wrapper';
+            const uploadBtn = document.createElement('div');
+            uploadBtn.className = 'upload-btn';
+            uploadBtn.textContent = '＋ Upload';
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.multiple = true;
+            fileInput.addEventListener('change', (e) => {
+                const files = e.target.files;
+                if (!files || files.length === 0) return;
+                Array.from(files).forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        const dataUrl = ev.target.result;
+                        const type = (file.type === 'image/svg+xml' || dataUrl.startsWith('data:image/svg')) ? 'svg' : 'img';
+                        userImageLibrary.push({ type, data: dataUrl });
+                        renderUserImagePanel();
+                    };
+                    reader.readAsDataURL(file);
+                });
+                fileInput.value = '';
+            });
+            uploadWrapper.appendChild(uploadBtn);
+            uploadWrapper.appendChild(fileInput);
+            panel.appendChild(uploadWrapper);
+        }
+
+        function addImageSticker(img) {
+            if (isSaved) return;
+            const maxZ = stickers.reduce((m, s) => Math.max(m, s.zIndex || 0), 0);
+            stickers.push({
+                type: img.type,
+                content: img.data,
+                x: 80 + Math.random() * 200,
+                y: 80 + Math.random() * 200,
+                scale: 1,
+                rotation: 0,
+                zIndex: maxZ + 1,
+                fixed: false
+            });
+            renderNotebook();
+            saveHistory();
+        }
+
+        // ================================================================
+        // 筆記本邏輯
+        // ================================================================
+        function goToNotebook() {
+            if (Object.keys(selectedOptions).length === 0) {
+                alert('Please select at least one option first.');
+                return;
+            }
+
+            stickers = [];
+            Object.keys(selectedOptions).forEach(sceneId => {
+                const option = selectedOptions[sceneId];
+                const scene = scenes.find(s => s.id === sceneId);
+                if (!scene) return;
+
+                const custom = customIllustrations[sceneId]?.[option];
+                let content, type;
+                if (custom) { content = custom.data; type = custom.type; }
+                else { content = scene.renderIllustration(option); type = 'svg'; }
+
+                stickers.push({
+                    type,
+                    content,
+                    sceneId,
+                    option,
+                    x: 30 + Math.random() * 250,
+                    y: 30 + Math.random() * 250,
+                    scale: 1,
+                    rotation: 0,
+                    zIndex: stickers.length + 1,
+                    fixed: false
+                });
+            });
+
+            document.getElementById('sceneGrid').style.display = 'none';
+            document.getElementById('finishToolbar').style.display = 'none';
+            document.getElementById('notebookPage').classList.add('active');
+
+            renderUserImagePanel();
+            renderNotebook();
+            setTimeout(() => {
+                resizeCanvas();
+                saveHistory();
+            }, 100);
+
+            isSaved = false;
+            updateModeUI();
+        }
+
+        function renderNotebook() {
+            const area = document.getElementById('stickerArea');
+            area.innerHTML = '';
+
+            const sorted = stickers.slice().sort((a,b) => (a.zIndex||0) - (b.zIndex||0));
+
+            sorted.forEach((sticker) => {
+                const idx = stickers.indexOf(sticker);
+                let el;
+                if (sticker.type === 'text') {
+                    el = document.createElement('div');
+                    el.className = 'editable-text';
+                    el.textContent = sticker.content || 'Double-click to edit';
+                    el.dataset.index = idx;
+                    el.style.left = sticker.x + 'px';
+                    el.style.top = sticker.y + 'px';
+                    el.style.zIndex = sticker.zIndex || 1;
+                    el.style.fontSize = (sticker.fontSize || 16) + 'px';
+                    el.style.transform = `rotate(${sticker.rotation || 0}deg)`;
+                    el.style.transformOrigin = 'top left';
+                    el.addEventListener('dblclick', (e) => {
+                        if (isSaved) return;
+                        e.stopPropagation();
+                        el.contentEditable = 'true';
+                        el.focus();
+                        const range = document.createRange();
+                        range.selectNodeContents(el);
+                        const sel = window.getSelection();
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                    });
+                    el.addEventListener('blur', () => {
+                        el.contentEditable = 'false';
+                        stickers[idx].content = el.textContent;
+                    });
+                    el.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); el.blur(); }
+                    });
+                    el.addEventListener('mousedown', (e) => {
+                        if (el.contentEditable === 'true') return;
+                        if (e.target.classList.contains('delete-btn')) return;
+                        e.stopPropagation();
+                        if (isSaved) {
+                            selectSticker(idx, true);
+                        } else {
+                            selectSticker(idx);
+                        }
+                    });
+
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'delete-btn';
+                    delBtn.textContent = '×';
+                    delBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (isSaved) return;
+                        deleteSticker(idx);
+                    });
+                    el.appendChild(delBtn);
+                } else {
+                    el = document.createElement('div');
+                    el.className = 'sticker';
+                    el.dataset.index = idx;
+                    el.style.left = sticker.x + 'px';
+                    el.style.top = sticker.y + 'px';
+                    el.style.zIndex = sticker.zIndex || 1;
+                    const s = sticker.scale || 1;
+                    const r = sticker.rotation || 0;
+                    el.style.transform = `rotate(${r}deg) scale(${s})`;
+                    el.style.transformOrigin = 'top left';
+
+                    if (sticker.type === 'img') {
+                        el.innerHTML = `<img src="${sticker.content}" alt="${sticker.option || 'sticker'}" style="max-width:180px; max-height:130px;" />`;
+                    } else {
+                        el.innerHTML = sticker.content;
+                        const svgEl = el.querySelector('svg');
+                        if (svgEl) { svgEl.setAttribute('width','180'); svgEl.setAttribute('height','auto'); }
+                    }
+
+                    if (!sticker.fixed && !isSaved) {
+                        const handle = document.createElement('div');
+                        handle.className = 'resize-handle';
+                        handle.addEventListener('mousedown', (e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            startResize(e, idx, el);
+                        });
+                        el.appendChild(handle);
+
+                        const rotHandle = document.createElement('div');
+                        rotHandle.className = 'rotate-handle';
+                        rotHandle.textContent = '↻';
+                        rotHandle.addEventListener('mousedown', (e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            startRotate(e, idx, el);
+                        });
+                        el.appendChild(rotHandle);
+
+                        const delBtn = document.createElement('button');
+                        delBtn.className = 'delete-btn';
+                        delBtn.textContent = '×';
+                        delBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            deleteSticker(idx);
+                        });
+                        el.appendChild(delBtn);
+                    }
+
+                    // 点击只选中，不改变图层顺序
+                    el.addEventListener('mousedown', (e) => {
+                        if (e.target.classList.contains('resize-handle') || 
+                            e.target.classList.contains('rotate-handle') || 
+                            e.target.classList.contains('delete-btn')) return;
+                        e.stopPropagation();
+                        if (isSaved) {
+                            selectSticker(idx, true);
+                        } else {
+                            selectSticker(idx);
+                        }
+                    });
+                }
+
+                // 只有非固定且非保存状态才可拖动
+                if (!sticker.fixed && !isSaved) {
+                    makeDraggable(el, idx);
+                }
+                area.appendChild(el);
+            });
+        }
+
+        function deleteSticker(idx) {
+            if (isSaved) return;
+            stickers.splice(idx, 1);
+            selectedStickerIndex = -1;
+            document.getElementById('scaleControls').style.display = 'none';
+            updateSidebar();
+            renderNotebook();
+            saveHistory();
+        }
+
+        function selectSticker(idx, readOnly) {
+            selectedStickerIndex = idx;
+            document.querySelectorAll('.sticker.selected, .editable-text.selected').forEach(el => el.classList.remove('selected'));
+            const area = document.getElementById('stickerArea');
+            const el = area.querySelector(`[data-index="${idx}"]`);
+            if (el) el.classList.add('selected');
+
+            const controls = document.getElementById('scaleControls');
+            const sticker = stickers[idx];
+            if (sticker && sticker.type !== 'text') {
+                controls.style.display = 'flex';
+                document.getElementById('scaleValue').textContent = Math.round((sticker.scale || 1) * 100) + '%';
+            } else {
+                controls.style.display = 'none';
+            }
+            updateSidebar();
+        }
+
+        function deselectSticker() {
+            selectedStickerIndex = -1;
+            document.querySelectorAll('.sticker.selected, .editable-text.selected').forEach(el => el.classList.remove('selected'));
+            document.getElementById('scaleControls').style.display = 'none';
+            updateSidebar();
+        }
+
+        function startResize(e, idx, el) {
+            if (isSaved || stickers[idx].fixed) return;
+            const startX = e.clientX, startY = e.clientY;
+            const startScale = stickers[idx].scale || 1;
+
+            function onMove(ev) {
+                const dx = ev.clientX - startX;
+                const dy = ev.clientY - startY;
+                const delta = Math.max(dx, dy) / 100;
+                let newScale = startScale + delta;
+                newScale = Math.max(0.2, Math.min(4, newScale));
+                stickers[idx].scale = newScale;
+                el.style.transform = `rotate(${stickers[idx].rotation || 0}deg) scale(${newScale})`;
+                document.getElementById('scaleValue').textContent = Math.round(newScale * 100) + '%';
+            }
+            function onUp() {
+                window.removeEventListener('mousemove', onMove);
+                window.removeEventListener('mouseup', onUp);
+                renderNotebook();
+                selectSticker(idx);
+                saveHistory();
+            }
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
+        }
+
+        function startRotate(e, idx, el) {
+            if (isSaved || stickers[idx].fixed) return;
+            const rect = el.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const startAngle = stickers[idx].rotation || 0;
+            const startMouseAngle = Math.atan2(e.clientY - centerY, e.clientX - centerX) * 180 / Math.PI;
+
+            function onMove(ev) {
+                const mouseAngle = Math.atan2(ev.clientY - centerY, ev.clientX - centerX) * 180 / Math.PI;
+                let newAngle = startAngle + (mouseAngle - startMouseAngle);
+                newAngle = ((newAngle + 180) % 360 + 360) % 360 - 180;
+                stickers[idx].rotation = newAngle;
+                el.style.transform = `rotate(${newAngle}deg) scale(${stickers[idx].scale || 1})`;
+            }
+            function onUp() {
+                window.removeEventListener('mousemove', onMove);
+                window.removeEventListener('mouseup', onUp);
+                renderNotebook();
+                selectSticker(idx);
+                saveHistory();
+            }
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
+        }
+
+        // 关键修改：拖动时才提升图层，点击不提升
+        function makeDraggable(el, idx) {
+            let isDragging = false;
+            let startX, startY, origX, origY;
+            let hasMoved = false;
+
+            el.addEventListener('mousedown', (e) => {
+                if (el.classList.contains('editable-text') && el.contentEditable === 'true') return;
+                if (e.target.classList.contains('resize-handle') || 
+                    e.target.classList.contains('rotate-handle') || 
+                    e.target.classList.contains('delete-btn')) return;
+                if (currentTool || isSaved || stickers[idx].fixed) return;
+
+                e.preventDefault();
+                isDragging = true;
+                hasMoved = false;
+                startX = e.clientX;
+                startY = e.clientY;
+                origX = stickers[idx].x;
+                origY = stickers[idx].y;
+
+                function onMove(ev) {
+                    if (!isDragging) return;
+                    const dx = ev.clientX - startX;
+                    const dy = ev.clientY - startY;
+                    if (Math.abs(dx) > 2 || Math.abs(dy) > 2) hasMoved = true;
+                    const newX = origX + dx;
+                    const newY = origY + dy;
+                    stickers[idx].x = newX;
+                    stickers[idx].y = newY;
+                    el.style.left = newX + 'px';
+                    el.style.top = newY + 'px';
+                }
+                function onUp() {
+                    if (isDragging) {
+                        isDragging = false;
+                        window.removeEventListener('mousemove', onMove);
+                        window.removeEventListener('mouseup', onUp);
+                        // 只在真正移动过时才提升图层顺序
+                        if (hasMoved) {
+                            const maxZ = stickers.reduce((m, s) => Math.max(m, s.zIndex || 0), 0);
+                            if (stickers[idx].zIndex < maxZ) {
+                                stickers[idx].zIndex = maxZ + 1;
+                                el.style.zIndex = maxZ + 1;
+                            }
+                        }
+                        saveHistory();
+                    }
+                }
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('mouseup', onUp);
+            });
+        }
+
+        // 缩放按钮
+        document.getElementById('scaleUpBtn').addEventListener('click', () => {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            if (!s || s.type === 'text' || s.fixed) return;
+            s.scale = Math.min(4, (s.scale || 1) + 0.1);
+            renderNotebook();
+            selectSticker(selectedStickerIndex);
+            saveHistory();
+        });
+
+        document.getElementById('scaleDownBtn').addEventListener('click', () => {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            if (!s || s.type === 'text' || s.fixed) return;
+            s.scale = Math.max(0.2, (s.scale || 1) - 0.1);
+            renderNotebook();
+            selectSticker(selectedStickerIndex);
+            saveHistory();
+        });
+
+        // ================================================================
+        // 侧栏（固定、图层列表）
+        // ================================================================
+        function updateSidebar() {
+            const content = document.getElementById('sidebarContent');
+            if (selectedStickerIndex < 0 || !stickers[selectedStickerIndex]) {
+                content.innerHTML = '<p class="sidebar-empty">Select an element to see controls.</p>';
+                return;
+            }
+            const s = stickers[selectedStickerIndex];
+            let html = `<div class="sidebar-section">
+                <h4>Element Info</h4>
+                <div class="sidebar-info">Type: ${s.type === 'text' ? 'Text' : (s.type === 'img' ? 'Image' : 'SVG')}</div>
+                <div class="sidebar-info">Position: (${Math.round(s.x)}, ${Math.round(s.y)})</div>
+                <div class="sidebar-info">Scale: ${Math.round((s.scale||1)*100)}%</div>
+                <div class="sidebar-info">Rotation: ${Math.round(s.rotation||0)}°</div>
+                <div class="sidebar-info">Layer: ${s.zIndex||1}</div>
+            </div>`;
+
+            html += `<div class="sidebar-section">
+                <h4>Fix (Lock)</h4>
+                <button class="sidebar-btn ${s.fixed ? 'active' : ''}" onclick="toggleFix()">${s.fixed ? '🔒 Fixed (click to unlock)' : '🔓 Unfixed'}</button>
+                <div class="sidebar-info" style="font-size:0.7rem;">Fixed elements are locked but can still be selected.</div>
+            </div>`;
+
+            html += `<div class="sidebar-section">
+                <h4>Layer Order</h4>
+                <button class="sidebar-btn" onclick="moveLayerUp()">⬆️ Forward</button>
+                <button class="sidebar-btn" onclick="moveLayerDown()">⬇️ Backward</button>
+                <button class="sidebar-btn" onclick="moveLayerTop()">⏫ To Front</button>
+                <button class="sidebar-btn" onclick="moveLayerBottom()">⏬ To Back</button>
+            </div>`;
+
+            html += `<div class="sidebar-section">
+                <h4>Rotation</h4>
+                <input type="range" min="-180" max="180" value="${s.rotation||0}" 
+                    oninput="setRotation(this.value)" 
+                    style="width:100%;accent-color:#b48b5e;">
+                <div class="sidebar-info" style="text-align:center;">${Math.round(s.rotation||0)}°</div>
+            </div>`;
+
+            // 图层列表（以图片为准）
+            const imageStickers = stickers.filter(st => st.type !== 'text');
+            if (imageStickers.length > 0) {
+                html += `<div class="sidebar-section">
+                    <h4>Layers (${imageStickers.length} images)</h4>
+                    <div class="layer-list">`;
+                const sortedLayers = imageStickers.slice().sort((a,b) => (b.zIndex||0) - (a.zIndex||0));
+                sortedLayers.forEach((st, i) => {
+                    const idx = stickers.indexOf(st);
+                    const isActive = idx === selectedStickerIndex;
+                    let thumb = '';
+                    if (st.type === 'img') {
+                        thumb = `<img src="${st.content}" style="max-width:100%;max-height:100%;" />`;
+                    } else {
+                        thumb = st.content;
+                    }
+                    html += `<div class="layer-item ${isActive ? 'active' : ''}" onclick="selectLayer(${idx})">
+                        <div class="layer-thumb">${thumb}</div>
+                        <div class="layer-name">Layer ${sortedLayers.length - i}${st.fixed ? ' 🔒' : ''}</div>
+                        ${st.fixed ? '<span class="layer-fixed-icon">🔒</span>' : ''}
+                    </div>`;
+                });
+                html += `</div></div>`;
+            }
+
+            content.innerHTML = html;
+        }
+
+        window.selectLayer = function(idx) {
+            if (isSaved) {
+                selectSticker(idx, true);
+            } else {
+                selectSticker(idx);
+            }
+        };
+
+        window.toggleFix = function() {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            s.fixed = !s.fixed;
+            renderNotebook();
+            selectSticker(selectedStickerIndex);
+            saveHistory();
+        };
+
+        window.moveLayerUp = function() {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            const maxZ = stickers.reduce((m, st) => Math.max(m, st.zIndex || 0), 0);
+            if (s.zIndex < maxZ) {
+                s.zIndex = (s.zIndex || 1) + 1;
+                renderNotebook();
+                selectSticker(selectedStickerIndex);
+                saveHistory();
+            }
+        };
+
+        window.moveLayerDown = function() {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            if (s.zIndex > 1) {
+                s.zIndex = (s.zIndex || 1) - 1;
+                renderNotebook();
+                selectSticker(selectedStickerIndex);
+                saveHistory();
+            }
+        };
+
+        window.moveLayerTop = function() {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            const maxZ = stickers.reduce((m, st) => Math.max(m, st.zIndex || 0), 0);
+            s.zIndex = maxZ + 1;
+            renderNotebook();
+            selectSticker(selectedStickerIndex);
+            saveHistory();
+        };
+
+        window.moveLayerBottom = function() {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            const minZ = stickers.reduce((m, st) => Math.min(m, st.zIndex || 1), Infinity);
+            s.zIndex = Math.max(1, minZ - 1);
+            renderNotebook();
+            selectSticker(selectedStickerIndex);
+            saveHistory();
+        };
+
+        window.setRotation = function(val) {
+            if (selectedStickerIndex < 0 || isSaved) return;
+            const s = stickers[selectedStickerIndex];
+            if (s.fixed) return;
+            s.rotation = parseFloat(val);
+            renderNotebook();
+            selectSticker(selectedStickerIndex);
+        };
+
+        // ================================================================
+        // 绘画模式
+        // ================================================================
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        let isDrawing = false;
+        let isEraser = false;
+
+        const brushSizeRange = document.getElementById('brushSizeRange');
+        const brushSizeValue = document.getElementById('brushSizeValue');
+        const brushSizeControl = document.getElementById('brushSizeControl');
+
+        brushSizeRange.addEventListener('input', () => {
+            brushSize = parseInt(brushSizeRange.value, 10);
+            brushSizeValue.textContent = brushSize;
+        });
+
+        function resizeCanvas() {
+            const inner = document.getElementById('notebookPageInner');
+            if (!inner) return;
+            const rect = inner.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            const prevData = canvas.toDataURL();
+
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            canvas.style.width = rect.width + 'px';
+            canvas.style.height = rect.height + 'px';
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            if (prevData && canvas.width > 0 && canvas.height > 0) {
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, rect.width, rect.height);
+                };
+                img.src = prevData;
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            setTimeout(resizeCanvas, 100);
+        });
+
+        function getCanvasCoords(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top
+            };
+        }
+
+        function setTool(tool) {
+            if (isSaved) return;
+            currentTool = tool;
+            const drawBtn = document.getElementById('drawModeBtn');
+            const eraserBtn = document.getElementById('eraserModeBtn');
+            const clearDrawBtn = document.getElementById('clearDrawBtn');
+            const saveBar = document.getElementById('drawingSaveBar');
+
+            if (tool === 'draw' || tool === 'eraser') {
+                canvas.classList.add('active');
+                canvas.style.cursor = tool === 'draw' ? 'crosshair' : 'cell';
+                isEraser = tool === 'eraser';
+                drawBtn.classList.toggle('active-tool', tool === 'draw');
+                eraserBtn.classList.toggle('active-tool', tool === 'eraser');
+                clearDrawBtn.style.display = 'inline-block';
+                brushSizeControl.style.display = 'flex';
+                saveBar.style.display = 'flex';
+                if (!drawingSnapshot) {
+                    drawingSnapshot = JSON.stringify({ stickers: stickers, canvasData: canvas.toDataURL() });
+                }
+                document.querySelectorAll('.sticker, .editable-text').forEach(el => {
+                    el.style.pointerEvents = 'none';
+                });
+            } else {
+                canvas.classList.remove('active');
+                canvas.style.cursor = 'default';
+                drawBtn.classList.remove('active-tool');
+                eraserBtn.classList.remove('active-tool');
+                isEraser = false;
+                clearDrawBtn.style.display = 'none';
+                brushSizeControl.style.display = 'none';
+                saveBar.style.display = 'none';
+                drawingSnapshot = null;
+                document.querySelectorAll('.sticker, .editable-text').forEach(el => {
+                    el.style.pointerEvents = 'auto';
+                });
+                renderNotebook();
+            }
+            deselectSticker();
+        }
+
+        document.getElementById('drawModeBtn').addEventListener('click', () => {
+            setTool(currentTool === 'draw' ? null : 'draw');
+        });
+        document.getElementById('eraserModeBtn').addEventListener('click', () => {
+            setTool(currentTool === 'eraser' ? null : 'eraser');
+        });
+        document.getElementById('clearDrawBtn').addEventListener('click', () => {
+            if (confirm('Clear all drawing?')) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        });
+
+        document.getElementById('saveDrawingBtn').addEventListener('click', () => {
+            const dataUrl = canvas.toDataURL('image/png');
+            const img = new Image();
+            img.onload = () => {
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = img.width;
+                tempCanvas.height = img.height;
+                const tctx = tempCanvas.getContext('2d');
+                tctx.drawImage(img, 0, 0);
+                const imageData = tctx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                let hasContent = false;
+                for (let i = 3; i < imageData.data.length; i += 4) {
+                    if (imageData.data[i] > 0) { hasContent = true; break; }
+                }
+
+                if (!hasContent) {
+                    alert('No drawing to save. Please draw something first.');
+                    return;
+                }
+
+                const maxZ = stickers.reduce((m, s) => Math.max(m, s.zIndex || 0), 0);
+                stickers.push({
+                    type: 'img',
+                    content: dataUrl,
+                    x: 100 + Math.random() * 100,
+                    y: 100 + Math.random() * 100,
+                    scale: 1,
+                    rotation: 0,
+                    zIndex: maxZ + 1,
+                    fixed: false,
+                    isDrawing: true
+                });
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                setTool(null);
+                renderNotebook();
+                saveHistory();
+            };
+            img.src = dataUrl;
+        });
+
+        document.getElementById('cancelDrawingBtn').addEventListener('click', () => {
+            if (drawingSnapshot) {
+                const state = JSON.parse(drawingSnapshot);
+                stickers = state.stickers;
+                const img = new Image();
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    const dpr = window.devicePixelRatio || 1;
+                    ctx.drawImage(img, 0, 0, canvas.width / dpr, canvas.height / dpr);
+                };
+                img.src = state.canvasData;
+            }
+            setTool(null);
+            renderNotebook();
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            if (!currentTool || isSaved) return;
+            const { x, y } = getCanvasCoords(e);
+            isDrawing = true;
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            if (isEraser) {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = '#5e3e2b';
+            }
+            ctx.lineTo(x + 0.1, y + 0.1);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing || !currentTool || isSaved) return;
+            const { x, y } = getCanvasCoords(e);
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            if (isEraser) {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.strokeStyle = 'rgba(0,0,0,1)';
+            } else {
+                ctx.globalCompositeOperation = 'source-over';
+                ctx.strokeStyle = '#5e3e2b';
+            }
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+            ctx.beginPath();
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isDrawing = false;
+        });
+
+        // ================================================================
+        // 保存/编辑模式
+        // ================================================================
+        function updateModeUI() {
+            const saveBtn = document.getElementById('saveBtn');
+            const editBtn = document.getElementById('editBtn');
+            const indicator = document.getElementById('modeIndicator');
+            const toolbarButtons = document.querySelectorAll('.toolbar button');
+
+            if (isSaved) {
+                saveBtn.style.display = 'none';
+                editBtn.style.display = 'inline-block';
+                indicator.textContent = 'Viewing (Locked)';
+                indicator.className = 'mode-indicator viewing';
+                toolbarButtons.forEach(btn => {
+                    if (btn.id !== 'editBtn' && btn.id !== 'backToSelectionBtn' && btn.id !== 'exportPngBtn' && btn.id !== 'exportJpgBtn') {
+                        btn.disabled = true;
+                    }
+                });
+            } else {
+                saveBtn.style.display = 'inline-block';
+                editBtn.style.display = 'none';
+                indicator.textContent = 'Editing';
+                indicator.className = 'mode-indicator editing';
+                toolbarButtons.forEach(btn => btn.disabled = false);
+            }
+        }
+
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            isSaved = true;
+            deselectSticker();
+            setTool(null);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            renderNotebook();
+            updateModeUI();
+            saveHistory();
+            alert('Notebook saved! All elements are now locked. Click "Edit" to unlock.');
+        });
+
+        document.getElementById('editBtn').addEventListener('click', () => {
+            isSaved = false;
+            updateModeUI();
+            renderNotebook();
+        });
+
+        // ================================================================
+        // 导出高清 A4
+        // ================================================================
+        function exportNotebook(format) {
+            if (typeof html2canvas === 'undefined') {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+                script.onload = () => doExport(format);
+                document.head.appendChild(script);
+            } else {
+                doExport(format);
+            }
+        }
+
+        function doExport(format) {
+            const inner = document.getElementById('notebookPageInner');
+            if (!inner) return;
+
+            const hiddenEls = [];
+            document.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(el => {
+                if (el.style.display !== 'none') {
+                    hiddenEls.push({ el, display: el.style.display });
+                    el.style.display = 'none';
+                }
+            });
+            document.querySelectorAll('.sticker.selected, .editable-text.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+            const active = document.activeElement;
+            if (active && active.classList.contains('editable-text')) active.blur();
+
+            const drawCanvasData = canvas.toDataURL('image/png');
+
+            const A4_WIDTH = 5940;
+            const A4_HEIGHT = 4200;
+
+            html2canvas(inner, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#fffcf6',
+                allowTaint: false,
+                logging: false,
+                onclone: (clonedDoc) => {
+                    const clonedInner = clonedDoc.getElementById('notebookPageInner');
+                    const clonedCanvas = clonedInner.querySelector('#drawCanvas');
+                    if (clonedCanvas) {
+                        const img = clonedDoc.createElement('img');
+                        img.src = drawCanvasData;
+                        img.style.position = 'absolute';
+                        img.style.top = '0';
+                        img.style.left = '0';
+                        img.style.width = '100%';
+                        img.style.height = '100%';
+                        img.style.pointerEvents = 'none';
+                        img.style.zIndex = '500';
+                        clonedCanvas.parentNode.replaceChild(img, clonedCanvas);
+                    }
+                    clonedDoc.querySelectorAll('.delete-btn, .resize-handle, .rotate-handle').forEach(el => el.style.display = 'none');
+                    clonedDoc.querySelectorAll('.editable-text').forEach(el => {
+                        el.contentEditable = 'false';
+                        el.style.outline = 'none';
+                    });
+                }
+            }).then((renderedCanvas) => {
+                hiddenEls.forEach(({ el, display }) => { el.style.display = display; });
+
+                const finalCanvas = document.createElement('canvas');
+                finalCanvas.width = A4_WIDTH;
+                finalCanvas.height = A4_HEIGHT;
+                const fctx = finalCanvas.getContext('2d');
+
+                fctx.fillStyle = '#fffcf6';
+                fctx.fillRect(0, 0, A4_WIDTH, A4_HEIGHT);
+
+                const lineSpacing = 28 * (A4_WIDTH / inner.clientWidth);
+                fctx.strokeStyle = '#e8ddd0';
+                fctx.lineWidth = 2;
+                for (let y = lineSpacing; y < A4_HEIGHT; y += lineSpacing) {
+                    fctx.beginPath();
+                    fctx.moveTo(0, y);
+                    fctx.lineTo(A4_WIDTH, y);
+                    fctx.stroke();
+                }
+
+                fctx.strokeStyle = '#e8d7c0';
+                fctx.lineWidth = 6;
+                fctx.beginPath();
+                fctx.moveTo(40, 0);
+                fctx.lineTo(40, A4_HEIGHT);
+                fctx.stroke();
+
+                const renderW = renderedCanvas.width;
+                const renderH = renderedCanvas.height;
+                const scaleX = A4_WIDTH / renderW;
+                const scaleY = A4_HEIGHT / renderH;
+                const scale = Math.min(scaleX, scaleY);
+                const drawW = renderW * scale;
+                const drawH = renderH * scale;
+                const offsetX = (A4_WIDTH - drawW) / 2;
+                const offsetY = (A4_HEIGHT - drawH) / 2;
+
+                fctx.imageSmoothingEnabled = true;
+                fctx.imageSmoothingQuality = 'high';
+                fctx.drawImage(renderedCanvas, offsetX, offsetY, drawW, drawH);
+
+                const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
+                const quality = format === 'jpg' ? 0.95 : undefined;
+                const dataUrl = finalCanvas.toDataURL(mime, quality);
+
+                const link = document.createElement('a');
+                link.download = `sunday-morning-notebook-A4-HD.${format}`;
+                link.href = dataUrl;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch((err) => {
+                console.error('Export failed:', err);
+                alert('Export failed. Please try again.');
+                hiddenEls.forEach(({ el, display }) => { el.style.display = display; });
+            });
+        }
+
+        // ================================================================
+        // 其他功能
+        // ================================================================
+        function addTextSticker() {
+            if (isSaved) return;
+            const maxZ = stickers.reduce((m, s) => Math.max(m, s.zIndex || 0), 0);
+            stickers.push({
+                type: 'text',
+                content: 'Double-click to edit',
+                x: 120,
+                y: 120,
+                fontSize: 16,
+                rotation: 0,
+                zIndex: maxZ + 1,
+                fixed: false
+            });
+            renderNotebook();
+            saveHistory();
+        }
+
+        function clearNotebook() {
+            if (isSaved) return;
+            if (confirm('Clear all stickers and drawing from the notebook?')) {
+                stickers = [];
+                selectedStickerIndex = -1;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                renderNotebook();
+                document.getElementById('scaleControls').style.display = 'none';
+                saveHistory();
+            }
+        }
+
+        function backToSelection() {
+            setTool(null);
+            deselectSticker();
+            document.getElementById('notebookPage').classList.remove('active');
+            document.getElementById('sceneGrid').style.display = 'flex';
+            document.getElementById('finishToolbar').style.display = 'flex';
+        }
+
+        document.getElementById('stickerArea').addEventListener('mousedown', (e) => {
+            if (e.target === document.getElementById('stickerArea') || e.target === document.getElementById('notebookPageInner')) {
+                deselectSticker();
+            }
+        });
+
+        // ================================================================
+        // 事件绑定
+        // ================================================================
+        document.getElementById('goToNotebookBtn').addEventListener('click', goToNotebook);
+        document.getElementById('openEditorBtn').addEventListener('click', requestAdminAccess);
+        document.getElementById('passwordSubmitBtn').addEventListener('click', verifyPassword);
+        document.getElementById('passwordCancelBtn').addEventListener('click', () => {
+            document.getElementById('passwordOverlay').classList.add('hidden');
+        });
+        document.getElementById('passwordInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') verifyPassword();
+        });
+
+        document.getElementById('closeAdminPanelBtn').addEventListener('click', closeAdminPanel);
+        document.getElementById('saveAdminBtn').addEventListener('click', saveAdminChanges);
+
+        document.getElementById('addTextBtn').addEventListener('click', addTextSticker);
+        document.getElementById('clearNotebookBtn').addEventListener('click', clearNotebook);
+        document.getElementById('backToSelectionBtn').addEventListener('click', backToSelection);
+
+        document.getElementById('exportPngBtn').addEventListener('click', () => exportNotebook('png'));
+        document.getElementById('exportJpgBtn').addEventListener('click', () => exportNotebook('jpg'));
+
+        document.getElementById('undoBtn').addEventListener('click', undo);
+        document.getElementById('redoBtn').addEventListener('click', redo);
+
+        document.getElementById('bgImageInput').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                customBg = ev.target.result;
+                renderBgPreview();
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('removeBgBtn').addEventListener('click', () => {
+            customBg = '';
+            renderBgPreview();
+        });
+
+        document.getElementById('adminPanelOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) closeAdminPanel();
+        });
+
+        // 初始化
+        renderScenes();
+        renderUserImagePanel();
+        applyCustomBg();
+        updateModeUI();
+    </script>
+</body>
+</html>
